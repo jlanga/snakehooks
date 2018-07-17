@@ -50,8 +50,9 @@ do_shellcheck(){
 }
 
 do_yamllint(){
-    find . -type f -name "*.yml" -o -name "*.yaml" | grep -v ^"./.snakemake" \
-    | xargs yamllint --strict
+    find . -type f -name "*.yml" -o -name "*.yaml" \
+    | grep -v ^"./.snakemake" \
+    | xargs yamllint
 }
 
 
