@@ -13,20 +13,25 @@ set -euo pipefail
 
 # Pipeline
 do_clean() {
+    snakemake --version
     snakemake clean
 }
 
 do_pipeline_dry_run() {
+    snakemake --version
     snakemake --dryrun --printshellcmds -j
 }
 
 do_pipeline() {
+    snakemake --version
     snakemake --use-conda -j
 }
 
 
 # Linting
 do_pylint_snakefiles() {
+    pylint --version
+
     pylint \
         --disable=syntax-error \
         Snakefile
@@ -39,20 +44,25 @@ do_pylint_snakefiles() {
 }
 
 do_pylint_python() {
+    pylint --version
     if [ -d src/ ] ; then
         find src/ -name "*.py" -path 'src/snakefiles' -prune -exec pylint {} \;
     fi
 }
 
 do_shellcheck(){
+    shellcheck --version
+
     # Check all files with a bash shebang
     grep -rl '^#!/.*bash' . | xargs shellcheck
 }
 
 do_yamllint(){
+    yamllint --version
+
     find . -type f -name "*.yml" -o -name "*.yaml" \
-    | grep -v ^"./.snakemake" \
-    | xargs yamllint
+    | grep -v ^"./.snakemake" `# snakemake can generate some` \
+    | xargs yamllint --strict
 }
 
 
