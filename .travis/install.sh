@@ -2,8 +2,6 @@
 
 set -euo pipefail
 
-sudo apt-get update
-
 # We do this conditionally because it saves us some downloading if the
 # version is the same.
 if [ ! -d "$HOME"/miniconda ]; then
