@@ -18,7 +18,7 @@ if [ ! -d "$HOME"/miniconda/bin ]; then
 else
     echo "conda already installed. updating conda"
     export PATH="$HOME/miniconda/bin:$PATH"
-    conda update -q conda
+    conda update -q --yes conda
 fi
 
 # Useful for debugging any issues with conda
