@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
+set -euxo pipefail
 
 # We do this conditionally because it saves us some downloading if the
 # version is the same.
-if [ ! -d "$HOME"/miniconda ]; then
+if [ ! -d "$HOME"/miniconda/bin ]; then
     echo "Downloading and installing conda"
     wget \
         --continue \
-        https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
+        https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh \
         --output-document=miniconda.sh
     bash miniconda.sh -b -p "$HOME"/miniconda
     export PATH="$HOME/miniconda/bin:$PATH"
