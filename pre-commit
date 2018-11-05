@@ -36,11 +36,9 @@ do_pylint_snakefiles() {
         --disable=syntax-error \
         Snakefile
 
-    if [ -d src/snakefiles/ ] ; then
-        pylint \
-            --disable=syntax-error \
-            "$(find src/snakefiles/ -name '*.py' -type f)"
-    fi
+    find src/snakefiles -type f -name "*.py" \
+    | xargs pylint --disable=syntax-error
+
 }
 
 do_pylint_python() {
