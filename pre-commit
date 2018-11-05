@@ -36,8 +36,7 @@ do_pylint_snakefiles() {
         --disable=syntax-error \
         Snakefile
 
-    find src/snakefiles -type f -name "*.py" \
-    | xargs pylint --disable=syntax-error
+    find src/snakefiles -type f -name "*.py" -exec  pylint --disable=syntax-error "{}" \;
 
 }
 
@@ -52,7 +51,7 @@ do_shellcheck(){
     shellcheck --version
 
     # Check all files with a bash shebang
-    grep -rl '^#!/.*bash' . | xargs shellcheck
+    grep -rl '^#!/.*bash' src/ .travis/ .travis| xargs shellcheck
 }
 
 do_yamllint(){
