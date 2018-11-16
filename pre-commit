@@ -42,11 +42,9 @@ do_pylint_python() {
 
     pylint --version
 
-    PYTHON_SCRIPTS=$(ls -1 src/*.py)
+    find src -name "*.py" -type f -not -path "*snakefiles*" -print0 \
+    | xargs -0 pylint
 
-    if [[ $PYTHON_SCRIPTS ]] ; then
-        find src -name "*.py" -type f -print0 | xargs -0 pylint
-    fi
 }
 
 do_shellcheck(){
