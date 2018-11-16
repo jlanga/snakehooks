@@ -53,7 +53,7 @@ do_shellcheck(){
     shellcheck --version
 
     # Check all files with a bash shebang
-    grep -rl '^#!/.*bash' src/  | xargs shellcheck
+    grep -rl '^#!/.*sh' src  | xargs shellcheck
 }
 
 do_yamllint(){

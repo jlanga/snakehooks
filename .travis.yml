@@ -14,11 +14,12 @@ cache:
         - $HOME/miniconda/
 
 install: |
+    URL="https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh"
     if [ ! -d "$HOME"/miniconda/bin ]; then
         echo "Downloading and installing conda"
         wget \
             --continue \
-            https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh \
+            $URL \
             --output-document=miniconda.sh
         rm -rf "$HOME"/miniconda
         bash miniconda.sh -b -p "$HOME"/miniconda
