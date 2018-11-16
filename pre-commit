@@ -5,7 +5,7 @@ set -euo pipefail
 # pre-commit hooks:
 # check that the pipeline works,
 # check linters:
-#   python conde: flake8
+#   python conde: pylint
 #   shell: shellcheck
 #   yaml: yamllint
 #   r: lintr
@@ -34,16 +34,18 @@ do_pylint_snakefiles() {
 
     pylint \
         --disable=syntax-error \
-        Snakefile
-
-    find src/snakefiles -type f -name "*.py" -exec  pylint --disable=syntax-error "{}" \;
+        Snakefile src/snakefiles/*.py
 
 }
 
 do_pylint_python() {
+
     pylint --version
-    if [ -d src/ ] ; then
-        find src/ -name "*.py" -path 'src/snakefiles' -prune -exec pylint {} \;
+
+    PYTHON_SCRIPTS=$(ls -1 src/*.py)
+
+    if [[ $PYTHON_SCRIPTS ]] ; then
+        ls -1 src/*.py | xargs pylint 
     fi
 }
 
@@ -51,7 +53,7 @@ do_shellcheck(){
     shellcheck --version
 
     # Check all files with a bash shebang
-    grep -rl '^#!/.*bash' src/ .travis/ .travis| xargs shellcheck
+    grep -rl '^#!/.*bash' src/ .travis/ .travis | xargs shellcheck
 }
 
 do_yamllint(){

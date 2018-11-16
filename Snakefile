@@ -1,6 +1,4 @@
-rule clean:
-    shell:
-        "if [ -e test.txt ]; then rm test.txt; fi"
+include: "src/snakefiles/clean.py"
 
 rule all:
     output:
