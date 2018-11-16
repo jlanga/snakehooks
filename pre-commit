@@ -45,7 +45,7 @@ do_pylint_python() {
     PYTHON_SCRIPTS=$(ls -1 src/*.py)
 
     if [[ $PYTHON_SCRIPTS ]] ; then
-        ls -1 src/*.py | xargs pylint 
+        ls -1 src/*.py | xargs pylint
     fi
 }
 
@@ -53,7 +53,7 @@ do_shellcheck(){
     shellcheck --version
 
     # Check all files with a bash shebang
-    grep -rl '^#!/.*bash' src/ .travis/ .travis | xargs shellcheck
+    grep -rl '^#!/.*bash' src/  | xargs shellcheck
 }
 
 do_yamllint(){
