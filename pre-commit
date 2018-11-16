@@ -45,7 +45,7 @@ do_pylint_python() {
     PYTHON_SCRIPTS=$(ls -1 src/*.py)
 
     if [[ $PYTHON_SCRIPTS ]] ; then
-        ls -1 src/*.py | xargs pylint
+        find src -name "*.py" -type f -print0 | xargs -0 pylint
     fi
 }
 
