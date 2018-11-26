@@ -37,8 +37,8 @@ install: |
 
     # Use bioconda and conda-forge
     conda config --add channels defaults
-    conda config --add channels conda-forge
     conda config --add channels bioconda
+    conda config --add channels conda-forge
     conda install --yes snakemake=5.0.0 yamllint=1.11.1 pylint=1.9.2
     conda clean --all --yes
     pip install pathspec
