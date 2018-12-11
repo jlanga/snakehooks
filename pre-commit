@@ -28,8 +28,9 @@ do_pipeline() {
 }
 
 
-# Linting
 do_pylint_snakefiles() {
+    # pylint the main Snakefile and the *.py files in src/snakefiles/
+
     pylint --version
 
     pylint \
@@ -39,26 +40,42 @@ do_pylint_snakefiles() {
 }
 
 do_pylint_python() {
-
+    # Pylint python scripts over the src/ folder
     pylint --version
 
-    find src -name "*.py" -type f -not -path "*snakefiles*" -print0 \
+    find \
+        src \
+        -name "*.py" \
+        -type f \
+        -maxdepth 1 \
+        -print0 \
     | xargs -0 pylint
 
 }
 
 do_shellcheck(){
+    # Perform shellcheck over the *.sh files in src/
+
     shellcheck --version
 
-    # Check all files with a bash shebang
-    grep -rl '^#!/.*sh' src  | xargs shellcheck
+    # Check all *.sh files
+    find \
+        src/ \
+        -maxdepth 1 \
+        -type f \
+        -name "*.sh" \
+    | xargs shellcheck
 }
 
 do_yamllint(){
+    # yamllint over yaml files in . and src/snakefiles/
     yamllint --version
 
-    find . -type f -name "*.yml" -o -name "*.yaml" \
-    | grep -v ^"./.snakemake" `# snakemake can generate some` \
+    find \
+        . src/snakefiles/ \
+        -maxdepth 1 \
+        -type f \
+        -name "*.yml" -o -name "*.yaml" \
     | xargs yamllint --strict
 }
 
@@ -82,24 +99,31 @@ fi
 # Run everything
 echo "Cleaning results"
 do_clean || fail clean
+echo
 
 echo "Checking the pipeline"
 do_pipeline_dry_run || fail pipeline_dry_run
+echo
 
 echo "Linting Snakefiles"
 do_pylint_snakefiles || fail pylint_snakefiles
+echo
 
 echo "Linting Python scripts"
 do_pylint_python || fail pylint
+echo
 
 echo "Linting Shell scripts"
 do_shellcheck || fail shellcheck
+echo
 
 echo "Linting YAML files"
 do_yamllint || fail yamllint
+echo
 
 echo "Running the pipeline"
 do_pipeline || fail Snakemake
+echo
 
 # If there are whitespace errors, print the offending file names and fail.
 exec git diff-index --check --cached $against --
