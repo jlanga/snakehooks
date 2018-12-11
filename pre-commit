@@ -49,7 +49,7 @@ do_pylint_python() {
         -type f \
         -maxdepth 1 \
         -print0 \
-    | xargs -0 pylint
+    | xargs -0 --no-run-if-empty pylint
 
 }
 
@@ -64,7 +64,7 @@ do_shellcheck(){
         -maxdepth 1 \
         -type f \
         -name "*.sh" \
-    | xargs shellcheck
+    | xargs --no-run-if-empty shellcheck
 }
 
 do_yamllint(){
@@ -76,7 +76,7 @@ do_yamllint(){
         -maxdepth 1 \
         -type f \
         -name "*.yml" -o -name "*.yaml" \
-    | xargs yamllint --strict
+    | xargs --no-run-if-empty yamllint --strict
 }
 
 
